@@ -1,0 +1,63 @@
+{
+    "nav": {
+        "aboutme": "About Me",
+        "skills": "Skills",
+        "projects": "Projects",
+        "certificates": "Certificates",
+        "workexperience": "Work Experience",
+        "education": "Education",
+        "contact": "Contact"
+    },
+    "skills": {
+        "title": "Skills",
+        "description": "Here are some of the skills and technologies I have experience with",
+        "languages": "Programming Languages",
+        "library-frameworks": "Library & Frameworks",
+        "databases": "Databases",
+        "devops-hosting": "DevOps & Hosting",
+        "runtime-pm": "Runtime & Package Managers",
+        "tools": "Tools and Platforms"
+    },
+    "projects": {
+        "title": "Projects",
+        "description": "Here are some of the projects I've developed and contributed to",
+        "features": "Key Features",
+        "type": {
+            "web": "Web App",
+            "mobile": "Mobile App",
+            "desktop": "Desktop App",
+            "other": "Other"
+        },
+        "status": {
+            "online": "ONLINE",
+            "offline": "OFFLINE",
+            "development": "DEVELOPMENT"
+        },
+        "viewDetails": "View Details",
+        "viewProject": "View Project",
+        "viewGithub": "View on GitHub"
+    },
+    "workexperience": {
+        "title": "Work Experience",
+        "description": "Companies I've worked for and the roles I've held",
+        "intern": "Intern",
+        "part-time": "Part-time",
+        "full-time": "Full-time"
+    },
+    "education": {
+        "title": "Education",
+        "description": "Educational institutions I've attended and degrees I've earned"
+    },
+    "contact": {
+        "title": "Contact",
+        "description": "Feel free to reach out to me if you have any questions or opportunities!",
+        "sendEmail": "Send Email",
+        "visitProfile": "Visit Profile",
+        "callNow": "Call Now"
+    },
+    "error": {
+        "title": "Page not found",
+        "description": "Sorry, the page you are looking for does not exist.",
+        "back": "Back"
+    }
+}

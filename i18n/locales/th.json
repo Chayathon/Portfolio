@@ -1,0 +1,63 @@
+{
+    "nav": {
+        "aboutme": "เกี่ยวกับฉัน",
+        "skills": "ทักษะ",
+        "projects": "ผลงาน",
+        "certificates": "เกียรติบัตร",
+        "workexperience": "ประสบการณ์การทำงาน",
+        "education": "การศึกษา",
+        "contact": "ติดต่อ"
+    },
+    "skills": {
+        "title": "ทักษะ",
+        "description": "ทักษะและเทคโนโลยีบางส่วน ที่ผมมีประสบการณ์",
+        "languages": "ภาษาโปรแกรมมิ่ง",
+        "library-frameworks": "Library และ Frameworks",
+        "databases": "ฐานข้อมูล",
+        "devops-hosting": "DevOps และ Hosting",
+        "runtime-pm": "Runtime และ Package Managers",
+        "tools": "เครื่องมือและแพลตฟอร์ม"
+    },
+    "projects": {
+        "title": "ผลงาน",
+        "description": "โปรเจกต์บางส่วน ที่ผมเคยพัฒนาและมีส่วนร่วม",
+        "features": "คุณสมบัติหลัก",
+        "type": {
+            "web": "เว็บแอป",
+            "mobile": "แอปมือถือ",
+            "desktop": "แอปเดสก์ท็อป",
+            "other": "อื่นๆ"
+        },
+        "status": {
+            "online": "ออนไลน์",
+            "offline": "ออฟไลน์",
+            "development": "กำลังพัฒนา"
+        },
+        "viewDetails": "ดูรายละเอียด",
+        "viewProject": "เยี่ยมชมโปรเจกต์",
+        "viewGithub": "ดูบน GitHub"
+    },
+    "workexperience": {
+        "title": "ประสบการณ์การทำงาน",
+        "description": "บริษัทที่ผมเคยร่วมงานและบทบาทที่ผมเคยรับผิดชอบ",
+        "intern": "ฝึกงาน",
+        "part-time": "งานพิเศษ",
+        "full-time": "งานประจำ"
+    },
+    "education": {
+        "title": "การศึกษา",
+        "description": "สถานบันการศึกษาที่ผมเคยศึกษาและวุฒิการศึกษาที่ผมได้รับ"
+    },
+    "contact": {
+        "title": "ติดต่อ",
+        "description": "อย่าลังเลที่จะติดต่อผมหากคุณมีคำถามหรือโอกาส!",
+        "sendEmail": "ส่งอีเมล",
+        "visitProfile": "เยี่ยมชมโปรไฟล์",
+        "callNow": "โทรเลย"
+    },
+    "error": {
+        "title": "ไม่พบหน้า",
+        "description": "ขออภัย, หน้าที่คุณกำลังมองหาไม่มีอยู่",
+        "back": "กลับ"
+    }
+}
