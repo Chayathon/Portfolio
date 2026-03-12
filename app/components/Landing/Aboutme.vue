@@ -50,7 +50,11 @@
                     delay: 0.1,
                 }"
             >
-                {{ aboutme.title }}
+                {{ aboutme.greetings }}
+                <br />
+                {{ aboutme.name }}
+                <br />
+                {{ aboutme.position }}
             </Motion>
         </template>
 
