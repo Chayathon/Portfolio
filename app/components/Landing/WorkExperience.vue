@@ -24,12 +24,12 @@
 </template>
 
 <script setup lang="ts">
-import { workExperiences } from "~/data/workExperience";
+import { workExperience } from "~/data/workExperience";
 
 const { locale } = useI18n();
 
 const timelineWorks = computed(() =>
-    workExperiences.map((work) => {
+    workExperience.map((work) => {
         const loc = locale.value === "th" ? work.th : work.en;
         return {
             icon: work.icon ?? "i-lucide-briefcase",

@@ -14,7 +14,7 @@ export type WorkExperience = {
     icon?: string;
 };
 
-export const workExperiences: WorkExperience[] = [
+export const workExperience: WorkExperience[] = [
     {
         en: {
             company: "Unity IT System Co., Ltd.",
