@@ -86,7 +86,7 @@ export const workExperience: WorkExperience[] = [
             company: "Mass Corporation Co., Ltd.",
             position: "Jr. Full Stack Developer",
             description:
-                "Developed and maintained web applications. Collaborated with cross-functional teams to design and implement new features, resulting in a 20% increase in user engagement. Implemented CI/CD pipelines using GitHub Actions, reducing deployment time by 30%.",
+                "Develop web and mobile applications, collaborate with cross-functional teams to deliver new features, ensure system quality through thorough testing and code reviews, and continuously deploy and improve the performance and security of applications.",
             location: "Samut Prakan, Thailand",
             startDate: "June 2025",
             endDate: "Present",
@@ -95,7 +95,7 @@ export const workExperience: WorkExperience[] = [
             company: "บริษัท แมส คอร์ปอเรชั่น จำกัด",
             position: "Jr. Full Stack Developer",
             description:
-                "พัฒนาและดูแลแอปพลิเคชันเว็บ ร่วมมือกับทีมข้ามสายงานในการออกแบบและนำฟีเจอร์ใหม่ๆ ไปใช้ ส่งผลให้มีการเพิ่มการมีส่วนร่วมของผู้ใช้ขึ้น 20% นำ CI/CD pipelines มาใช้โดยใช้ GitHub Actions ลดเวลาในการปรับใช้ลง 30%",
+                "พัฒนาเว็บแอปพลิเคชันและแอปพลิเคชันมือถือ ร่วมกับทีมอื่นๆ เพื่อส่งมอบฟีเจอร์ใหม่ๆ ใส่ใจคุณภาพของระบบผ่านการทดสอบและการตรวจสอบอย่างละเอียด รวมถึงการ Deploy และปรับปรุงประสิทธิภาพและความปลอดภัยของแอปพลิเคชันอย่างต่อเนื่อง",
             location: "สมุทรปราการ, ประเทศไทย",
             startDate: "มิถุนายน 2568",
             endDate: "ปัจจุบัน",
