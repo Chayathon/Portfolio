@@ -91,7 +91,7 @@
             :title="t('contact.title')"
             :description="t('contact.description')"
         >
-            <LandingContact />
+            <LandingContacts />
         </UPageSection>
     </Motion>
 </template>
