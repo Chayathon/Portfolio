@@ -24,5 +24,5 @@
 </template>
 
 <script setup lang="ts">
-import { contacts } from "~/data/contact";
+import { contacts } from "~/data/contacts";
 </script>
