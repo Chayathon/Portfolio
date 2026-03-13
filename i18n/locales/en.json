@@ -33,6 +33,8 @@
             "offline": "OFFLINE",
             "development": "DEVELOPMENT"
         },
+        "viewAll": "View all projects",
+        "showLess": "Show less",
         "viewDetails": "View Details",
         "viewProject": "View Project",
         "viewGithub": "View on GitHub"

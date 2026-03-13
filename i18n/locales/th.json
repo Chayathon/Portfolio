@@ -33,6 +33,8 @@
             "offline": "ออฟไลน์",
             "development": "กำลังพัฒนา"
         },
+        "viewAll": "ดูทั้งหมด",
+        "showLess": "แสดงน้อยลง",
         "viewDetails": "ดูรายละเอียด",
         "viewProject": "เยี่ยมชมโปรเจกต์",
         "viewGithub": "ดูบน GitHub"
