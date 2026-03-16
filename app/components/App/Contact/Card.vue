@@ -1,6 +1,6 @@
 <template>
     <UCard
-        class="bg-default border border-default dark:bg-neutral-800 dark:border-neutral-700 rounded-xl shadow-md hover:scale-[1.03] hover:shadow-xl transition-all duration-300 cursor-pointer group"
+        class="rounded-xl shadow-md hover:scale-[1.03] hover:shadow-xl transition-all duration-300 cursor-pointer group"
         @click="handleClick"
     >
         <div class="flex flex-col items-center gap-4 py-4">

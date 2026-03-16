@@ -12,7 +12,7 @@
         </div>
 
         <UCard
-            class="bg-default dark:bg-neutral-800 shadow-md rounded-xl hover:scale-[1.01] hover:shadow-xl transition-all duration-300"
+            class="shadow-md rounded-xl hover:scale-[1.01] hover:shadow-xl transition-all duration-300"
         >
             <template #header>
                 <div class="flex items-start justify-between gap-4 -mb-2">

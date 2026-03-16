@@ -1,6 +1,6 @@
 <template>
     <UCard
-        class="bg-default dark:bg-neutral-800 rounded-xl shadow-md hover:scale-[1.01] hover:shadow-xl transition-all duration-200"
+        class="rounded-xl shadow-md hover:scale-[1.01] hover:shadow-xl transition-all duration-200"
     >
         <div class="flex items-start gap-4">
             <img

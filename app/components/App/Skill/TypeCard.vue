@@ -1,6 +1,6 @@
 <template>
-    <div
-        class="h-full border border-default bg-default dark:border-neutral-700 dark:bg-neutral-800 p-4 shadow-md rounded-xl hover:scale-[1.02] hover:shadow-lg transition-all duration-200"
+    <UCard
+        class="h-full shadow-md rounded-xl hover:scale-[1.02] hover:shadow-lg transition-all duration-200"
     >
         <div class="mb-3 flex items-center gap-2">
             <h3 class="text-base font-semibold">
@@ -15,7 +15,7 @@
                 :skill="skill"
             />
         </div>
-    </div>
+    </UCard>
 </template>
 
 <script setup lang="ts">

@@ -1,6 +1,6 @@
 <template>
     <UCard
-        class="group h-full rounded-2xl shadow-md cursor-pointer overflow-hidden bg-default dark:bg-neutral-800 hover:shadow-xl transition-all duration-300 flex flex-col"
+        class="group h-full rounded-2xl shadow-md cursor-pointer overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col"
     >
         <template #header>
             <div
