@@ -17,16 +17,21 @@ let renderer: THREE.WebGLRenderer | null = null;
 let scene: THREE.Scene | null = null;
 let camera: THREE.PerspectiveCamera | null = null;
 let points: THREE.Points | null = null;
+let pointPositionAttribute: THREE.BufferAttribute | null = null;
 let pointPositions: Float32Array | null = null;
 let pointBasePositions: Float32Array | null = null;
 let frameId = 0;
+let particlesAreSettling = false;
 
 const PARTICLE_FIELD_WIDTH = 16;
 const PARTICLE_FIELD_HEIGHT = 10;
 const PARTICLE_REPEL_RADIUS = 1.35;
+const PARTICLE_REPEL_RADIUS_SQ = PARTICLE_REPEL_RADIUS ** 2;
 const PARTICLE_REPEL_STRENGTH = 0.45;
 const PARTICLE_REPEL_DEPTH = 0.18;
 const PARTICLE_FOLLOW_EASING = 0.08;
+const PARTICLE_SETTLE_EPSILON = 0.002;
+const PARTICLE_SETTLE_EPSILON_SQ = PARTICLE_SETTLE_EPSILON ** 2;
 
 const pointer = {
     isActive: false,
@@ -58,6 +63,7 @@ const onPointerLeave = () => {
     pointer.isActive = false;
     pointer.targetX = 0;
     pointer.targetY = 0;
+    particlesAreSettling = true;
 };
 
 const onWindowMouseOut = (event: MouseEvent) => {
@@ -83,6 +89,96 @@ const onResize = () => {
     renderer.setSize(width, height);
 };
 
+const updateParticles = () => {
+    if (
+        !camera ||
+        !points ||
+        !pointPositions ||
+        !pointBasePositions ||
+        !pointPositionAttribute
+    ) {
+        return false;
+    }
+
+    let hasPendingMotion = false;
+    let didMutatePositions = false;
+
+    const rotationY = points.rotation.y;
+    const cosRotation = Math.cos(rotationY);
+    const sinRotation = Math.sin(rotationY);
+    const frustumScale = Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5));
+    const pointerScaleX = pointer.currentX * camera.aspect * frustumScale;
+    const pointerScaleY = pointer.currentY * frustumScale;
+
+    for (let i = 0; i < pointPositions.length; i += 3) {
+        const baseX = pointBasePositions[i];
+        const baseY = pointBasePositions[i + 1];
+        const baseZ = pointBasePositions[i + 2];
+
+        let targetX = baseX;
+        let targetY = baseY;
+        let targetZ = baseZ;
+
+        if (pointer.isActive) {
+            const worldX = baseX * cosRotation + baseZ * sinRotation;
+            const worldY = baseY;
+            const worldZ = -baseX * sinRotation + baseZ * cosRotation;
+            const depth = camera.position.z - worldZ;
+            const deltaX = worldX - pointerScaleX * depth;
+            const deltaY = worldY - pointerScaleY * depth;
+            const distanceSq = deltaX * deltaX + deltaY * deltaY;
+
+            if (distanceSq < PARTICLE_REPEL_RADIUS_SQ) {
+                const safeDistance = Math.max(Math.sqrt(distanceSq), 0.001);
+                const influence = 1 - safeDistance / PARTICLE_REPEL_RADIUS;
+                const force = influence * influence * PARTICLE_REPEL_STRENGTH;
+                const targetWorldX = worldX + (deltaX / safeDistance) * force;
+                const targetWorldY = worldY + (deltaY / safeDistance) * force;
+                const targetWorldZ = worldZ + influence * PARTICLE_REPEL_DEPTH;
+
+                targetX =
+                    targetWorldX * cosRotation - targetWorldZ * sinRotation;
+                targetY = targetWorldY;
+                targetZ = targetWorldX * sinRotation + targetWorldZ * cosRotation;
+            }
+        }
+
+        const deltaToTargetX = targetX - pointPositions[i];
+        const deltaToTargetY = targetY - pointPositions[i + 1];
+        const deltaToTargetZ = targetZ - pointPositions[i + 2];
+        const distanceToTargetSq =
+            deltaToTargetX * deltaToTargetX +
+            deltaToTargetY * deltaToTargetY +
+            deltaToTargetZ * deltaToTargetZ;
+
+        if (distanceToTargetSq > PARTICLE_SETTLE_EPSILON_SQ) {
+            pointPositions[i] += deltaToTargetX * PARTICLE_FOLLOW_EASING;
+            pointPositions[i + 1] += deltaToTargetY * PARTICLE_FOLLOW_EASING;
+            pointPositions[i + 2] += deltaToTargetZ * PARTICLE_FOLLOW_EASING;
+            hasPendingMotion = true;
+            didMutatePositions = true;
+            continue;
+        }
+
+        if (
+            pointPositions[i] !== targetX ||
+            pointPositions[i + 1] !== targetY ||
+            pointPositions[i + 2] !== targetZ
+        ) {
+            pointPositions[i] = targetX;
+            pointPositions[i + 1] = targetY;
+            pointPositions[i + 2] = targetZ;
+            didMutatePositions = true;
+        }
+    }
+
+    if (didMutatePositions) {
+        pointPositionAttribute.needsUpdate = true;
+    }
+
+    return hasPendingMotion;
+};
+
 const animate = () => {
     if (!renderer || !scene || !camera || !points) {
         return;
@@ -93,65 +189,8 @@ const animate = () => {
 
     points.rotation.y += 0.00045;
 
-    if (pointPositions && pointBasePositions) {
-        const rotationY = points.rotation.y;
-        const cosRotation = Math.cos(rotationY);
-        const sinRotation = Math.sin(rotationY);
-        const frustumScale = Math.tan(
-            THREE.MathUtils.degToRad(camera.fov * 0.5),
-        );
-
-        for (let i = 0; i < pointPositions.length; i += 3) {
-            const baseX = pointBasePositions[i];
-            const baseY = pointBasePositions[i + 1];
-            const baseZ = pointBasePositions[i + 2];
-
-            let targetX = baseX;
-            let targetY = baseY;
-            let targetZ = baseZ;
-
-            if (pointer.isActive) {
-                const worldX = baseX * cosRotation + baseZ * sinRotation;
-                const worldY = baseY;
-                const worldZ = -baseX * sinRotation + baseZ * cosRotation;
-                const depth = camera.position.z - worldZ;
-                const halfHeight = frustumScale * depth;
-                const halfWidth = halfHeight * camera.aspect;
-                const pointerX = pointer.currentX * halfWidth;
-                const pointerY = pointer.currentY * halfHeight;
-                const deltaX = worldX - pointerX;
-                const deltaY = worldY - pointerY;
-                const distance = Math.hypot(deltaX, deltaY);
-
-                if (distance < PARTICLE_REPEL_RADIUS) {
-                    const influence = 1 - distance / PARTICLE_REPEL_RADIUS;
-                    const safeDistance = Math.max(distance, 0.001);
-                    const force =
-                        influence * influence * PARTICLE_REPEL_STRENGTH;
-                    const targetWorldX =
-                        worldX + (deltaX / safeDistance) * force;
-                    const targetWorldY =
-                        worldY + (deltaY / safeDistance) * force;
-                    const targetWorldZ =
-                        worldZ + influence * PARTICLE_REPEL_DEPTH;
-
-                    targetX =
-                        targetWorldX * cosRotation - targetWorldZ * sinRotation;
-                    targetY = targetWorldY;
-                    targetZ =
-                        targetWorldX * sinRotation + targetWorldZ * cosRotation;
-                }
-            }
-
-            pointPositions[i] +=
-                (targetX - pointPositions[i]) * PARTICLE_FOLLOW_EASING;
-            pointPositions[i + 1] +=
-                (targetY - pointPositions[i + 1]) * PARTICLE_FOLLOW_EASING;
-            pointPositions[i + 2] +=
-                (targetZ - pointPositions[i + 2]) * PARTICLE_FOLLOW_EASING;
-        }
-
-        points.geometry.attributes.position.needsUpdate = true;
+    if (pointer.isActive || particlesAreSettling) {
+        particlesAreSettling = updateParticles();
     }
 
     renderer.render(scene, camera);
@@ -192,7 +231,9 @@ onMounted(() => {
     }
 
     const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    pointPositionAttribute = new THREE.BufferAttribute(positions, 3);
+    pointPositionAttribute.setUsage(THREE.DynamicDrawUsage);
+    geometry.setAttribute("position", pointPositionAttribute);
     pointPositions = positions;
     pointBasePositions = positions.slice();
 
@@ -240,6 +281,8 @@ onBeforeUnmount(() => {
 
     pointPositions = null;
     pointBasePositions = null;
+    pointPositionAttribute = null;
+    particlesAreSettling = false;
     renderer?.dispose();
     renderer = null;
     scene = null;
