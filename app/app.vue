@@ -1,7 +1,10 @@
 <template>
     <UApp :locale="locales[locale]">
+        <ClientOnly>
+            <AppInteractiveBackground />
+        </ClientOnly>
         <NuxtLayout>
-            <UMain class="relative">
+            <UMain class="relative z-10">
                 <NuxtPage />
             </UMain>
         </NuxtLayout>

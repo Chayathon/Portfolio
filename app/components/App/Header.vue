@@ -1,6 +1,6 @@
 <template>
     <div
-        class="fixed top-2 sm:top-4 mx-auto left-1/2 transform -translate-x-1/2 z-10 w-full px-2 sm:px-4"
+        class="fixed top-2 sm:top-4 mx-auto left-1/2 transform -translate-x-1/2 z-50 w-full px-2 sm:px-4"
     >
         <!-- Mobile Menu -->
         <div class="md:hidden flex justify-center items-center">
