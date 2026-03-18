@@ -23,7 +23,7 @@ export const educations: Education[] = [
         en: {
             institution:
                 "King Mongkut's University of Technology North Bangkok",
-            degree: "Second Class Honors in Bachelor of Industrial Technology (B.Ind.Tech.)",
+            degree: "Bachelor of Industrial Technology (B.Ind.Tech.)",
             field: "Information Technology",
             gpax: "3.58",
             award: "Second Class Honors",
@@ -48,7 +48,7 @@ export const educations: Education[] = [
     {
         en: {
             institution: "Saraburi Vocational College",
-            degree: "High Vocational Certificate in Software Development",
+            degree: "High Vocational Certificate of Software Development",
             field: "Information Technology",
             gpax: "3.92",
             startYear: "2021",
@@ -71,7 +71,7 @@ export const educations: Education[] = [
     {
         en: {
             institution: "Saraburi Vocational College",
-            degree: "Vocational Certificate in Business Management",
+            degree: "Vocational Certificate of Business Management",
             field: "Business Computer",
             gpax: "3.60",
             startYear: "2018",
