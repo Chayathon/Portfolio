@@ -16,12 +16,28 @@
         >
             <template #header>
                 <div class="flex items-start justify-between gap-4 -mb-2">
-                    <div class="flex-1 min-w-0 space-y-2">
-                        <h3
-                            class="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white"
-                        >
-                            {{ work.title }}
-                        </h3>
+                    <div class="flex-1 space-y-2">
+                        <div class="flex items-start justify-between">
+                            <h3
+                                class="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white"
+                            >
+                                {{ work.title }}
+                            </h3>
+                            <UBadge
+                                variant="subtle"
+                                :color="
+                                    work.type === 'full-time'
+                                        ? 'primary'
+                                        : work.type === 'part-time'
+                                          ? 'warning'
+                                          : 'secondary'
+                                "
+                                size="lg"
+                                class="shrink-0"
+                            >
+                                {{ t(`workexperience.${work.type}`) }}
+                            </UBadge>
+                        </div>
                         <div
                             class="flex items-center gap-2 text-base text-gray-700 dark:text-gray-300"
                         >
@@ -47,9 +63,6 @@
                             </span>
                         </div>
                     </div>
-                    <UBadge variant="subtle" size="lg" class="shrink-0">
-                        {{ t(`workexperience.${work.type}`) }}
-                    </UBadge>
                 </div>
             </template>
 
