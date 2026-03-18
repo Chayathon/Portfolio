@@ -38,7 +38,7 @@ const pointer = {
     targetY: 0,
 };
 
-const isMobileViewport = () => window.matchMedia("(max-width: 768px)").matches;
+const isMobileViewport = () => window.matchMedia("(max-width: 1024px)").matches;
 
 const updatePalette = () => {
     if (!renderer || !points) {
@@ -382,14 +382,42 @@ onBeforeUnmount(() => {
     opacity: 0.85;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .interactive-bg__veil {
+        background:
+            radial-gradient(
+                24rem 24rem at 12% 14%,
+                rgb(45 212 191 / 0.11),
+                transparent 60%
+            ),
+            radial-gradient(
+                18rem 18rem at 88% 18%,
+                rgb(20 184 166 / 0.08),
+                transparent 58%
+            ),
+            radial-gradient(
+                22rem 22rem at 50% 88%,
+                rgb(16 185 129 / 0.06),
+                transparent 64%
+            );
         opacity: 0.82;
     }
 
     .interactive-bg__veil::before {
+        inset: -4%;
+        background:
+            radial-gradient(
+                18rem 18rem at 28% 72%,
+                rgb(255 255 255 / 0.18),
+                transparent 64%
+            ),
+            radial-gradient(
+                24rem 24rem at 76% 76%,
+                rgb(16 185 129 / 0.05),
+                transparent 70%
+            );
         filter: blur(36px);
-        opacity: 0.62;
+        opacity: 0.42;
     }
 }
 </style>
