@@ -11,8 +11,6 @@ import * as THREE from "three";
 const colorMode = useColorMode();
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 
-const isMobile = ref(false);
-
 let renderer: THREE.WebGLRenderer | null = null;
 let scene: THREE.Scene | null = null;
 let camera: THREE.PerspectiveCamera | null = null;
@@ -21,7 +19,6 @@ let pointPositionAttribute: THREE.BufferAttribute | null = null;
 let pointPositions: Float32Array | null = null;
 let pointBasePositions: Float32Array | null = null;
 let frameId = 0;
-let particlesAreSettling = false;
 
 const PARTICLE_FIELD_WIDTH = 16;
 const PARTICLE_FIELD_HEIGHT = 10;
@@ -40,6 +37,8 @@ const pointer = {
     targetX: 0,
     targetY: 0,
 };
+
+const isMobileViewport = () => window.matchMedia("(max-width: 768px)").matches;
 
 const updatePalette = () => {
     if (!renderer || !points) {
@@ -63,7 +62,6 @@ const onPointerLeave = () => {
     pointer.isActive = false;
     pointer.targetX = 0;
     pointer.targetY = 0;
-    particlesAreSettling = true;
 };
 
 const onWindowMouseOut = (event: MouseEvent) => {
@@ -77,16 +75,21 @@ const onResize = () => {
         return;
     }
 
-    isMobile.value = window.matchMedia("(max-width: 768px)").matches;
+    const mobileViewport = isMobileViewport();
 
     const width = window.innerWidth;
     const height = window.innerHeight;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setPixelRatio(
-        Math.min(window.devicePixelRatio, isMobile.value ? 1.1 : 1.5),
+        Math.min(window.devicePixelRatio, mobileViewport ? 1.1 : 1.5),
     );
     renderer.setSize(width, height);
+
+    if (points) {
+        const material = points.material as THREE.PointsMaterial;
+        material.size = mobileViewport ? 0.06 : 0.07;
+    }
 };
 
 const updateParticles = () => {
@@ -97,10 +100,9 @@ const updateParticles = () => {
         !pointBasePositions ||
         !pointPositionAttribute
     ) {
-        return false;
+        return;
     }
 
-    let hasPendingMotion = false;
     let didMutatePositions = false;
 
     const rotationY = points.rotation.y;
@@ -139,7 +141,8 @@ const updateParticles = () => {
                 targetX =
                     targetWorldX * cosRotation - targetWorldZ * sinRotation;
                 targetY = targetWorldY;
-                targetZ = targetWorldX * sinRotation + targetWorldZ * cosRotation;
+                targetZ =
+                    targetWorldX * sinRotation + targetWorldZ * cosRotation;
             }
         }
 
@@ -155,7 +158,6 @@ const updateParticles = () => {
             pointPositions[i] += deltaToTargetX * PARTICLE_FOLLOW_EASING;
             pointPositions[i + 1] += deltaToTargetY * PARTICLE_FOLLOW_EASING;
             pointPositions[i + 2] += deltaToTargetZ * PARTICLE_FOLLOW_EASING;
-            hasPendingMotion = true;
             didMutatePositions = true;
             continue;
         }
@@ -175,8 +177,6 @@ const updateParticles = () => {
     if (didMutatePositions) {
         pointPositionAttribute.needsUpdate = true;
     }
-
-    return hasPendingMotion;
 };
 
 const animate = () => {
@@ -188,10 +188,7 @@ const animate = () => {
     pointer.currentY += (pointer.targetY - pointer.currentY) * 0.04;
 
     points.rotation.y += 0.00045;
-
-    if (pointer.isActive || particlesAreSettling) {
-        particlesAreSettling = updateParticles();
-    }
+    updateParticles();
 
     renderer.render(scene, camera);
     frameId = requestAnimationFrame(animate);
@@ -218,9 +215,8 @@ onMounted(() => {
         alpha: true,
     });
 
-    isMobile.value = window.matchMedia("(max-width: 768px)").matches;
-
-    const particleCount = isMobile.value ? 68 : 190;
+    const mobileViewport = isMobileViewport();
+    const particleCount = mobileViewport ? 68 : 190;
     const positions = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount; i += 1) {
@@ -238,7 +234,7 @@ onMounted(() => {
     pointBasePositions = positions.slice();
 
     const material = new THREE.PointsMaterial({
-        size: isMobile.value ? 0.06 : 0.07,
+        size: mobileViewport ? 0.06 : 0.07,
         transparent: true,
         opacity: 0.16,
         color: "#0f766e",
@@ -282,7 +278,6 @@ onBeforeUnmount(() => {
     pointPositions = null;
     pointBasePositions = null;
     pointPositionAttribute = null;
-    particlesAreSettling = false;
     renderer?.dispose();
     renderer = null;
     scene = null;
@@ -297,12 +292,29 @@ onBeforeUnmount(() => {
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
+    isolation: isolate;
+    --interactive-bg-glow-a: rgb(45 212 191 / 0.2);
+    --interactive-bg-glow-b: rgb(20 184 166 / 0.14);
+    --interactive-bg-glow-c: rgb(16 185 129 / 0.1);
+    --interactive-bg-glow-d: rgb(255 255 255 / 0.35);
+    --interactive-bg-line: rgb(15 23 42 / 0.05);
+}
+
+:global(.dark) .interactive-bg {
+    --interactive-bg-glow-a: rgb(52 211 153 / 0.24);
+    --interactive-bg-glow-b: rgb(45 212 191 / 0.18);
+    --interactive-bg-glow-c: rgb(16 185 129 / 0.14);
+    --interactive-bg-glow-d: rgb(167 243 208 / 0.14);
+    --interactive-bg-line: rgb(255 255 255 / 0.06);
 }
 
 .interactive-bg__canvas {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     display: block;
+    filter: saturate(1.04);
 }
 
 .interactive-bg__veil {
@@ -310,28 +322,74 @@ onBeforeUnmount(() => {
     inset: 0;
     background:
         radial-gradient(
-            900px circle at 12% 18%,
-            rgb(20 184 166 / 0.18),
+            56rem 56rem at 14% 16%,
+            var(--interactive-bg-glow-a),
             transparent 58%
         ),
         radial-gradient(
-            800px circle at 88% 76%,
-            rgb(16 185 129 / 0.14),
-            transparent 56%
+            40rem 40rem at 82% 22%,
+            var(--interactive-bg-glow-b),
+            transparent 54%
+        ),
+        radial-gradient(
+            48rem 48rem at 50% 82%,
+            var(--interactive-bg-glow-c),
+            transparent 60%
         );
+    opacity: 0.92;
 }
 
-:global(.dark) .interactive-bg__veil {
+.interactive-bg__veil::before,
+.interactive-bg__veil::after {
+    content: "";
+    position: absolute;
+}
+
+.interactive-bg__veil::before {
+    inset: -10%;
     background:
         radial-gradient(
-            900px circle at 12% 18%,
-            rgb(16 185 129 / 0.2),
-            transparent 60%
+            32rem 32rem at 24% 68%,
+            var(--interactive-bg-glow-d),
+            transparent 62%
         ),
         radial-gradient(
-            800px circle at 88% 76%,
-            rgb(52 211 153 / 0.14),
-            transparent 58%
+            44rem 44rem at 78% 72%,
+            var(--interactive-bg-glow-c),
+            transparent 68%
         );
+    filter: blur(48px);
+    opacity: 0.72;
+    transform: scale(1.06);
+}
+
+.interactive-bg__veil::after {
+    inset: 0;
+    background:
+        linear-gradient(
+            115deg,
+            transparent 12%,
+            var(--interactive-bg-line) 30%,
+            transparent 48%
+        ),
+        linear-gradient(
+            295deg,
+            transparent 24%,
+            var(--interactive-bg-line) 44%,
+            transparent 62%
+        );
+    mask-image: radial-gradient(circle at center, black 34%, transparent 88%);
+    opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+    .interactive-bg__veil {
+        opacity: 0.82;
+    }
+
+    .interactive-bg__veil::before {
+        filter: blur(36px);
+        opacity: 0.62;
+    }
 }
 </style>
