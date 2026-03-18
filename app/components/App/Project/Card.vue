@@ -50,7 +50,7 @@
             </div>
 
             <div
-                class="flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                class="flex items-center gap-2 text-sm font-medium text-primary-600 dark:text-primary-400 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-200"
             >
                 <span>{{ t("projects.viewDetails") }}</span>
                 <UIcon name="i-lucide-arrow-right" class="w-4 h-4" />
