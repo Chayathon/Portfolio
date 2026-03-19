@@ -94,7 +94,7 @@ export const skills: Skill[] = [
         type: "library-frameworks",
         name: "ElysiaJS",
         icon: "skill-icons:elysia-light",
-        color: "primary",
+        color: "neutral",
     },
     {
         type: "library-frameworks",
@@ -142,7 +142,7 @@ export const skills: Skill[] = [
         type: "database",
         name: "MySQL",
         icon: "logos:mysql-icon",
-        color: "primary",
+        color: "neutral",
     },
     {
         type: "database",
