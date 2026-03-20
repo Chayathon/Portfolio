@@ -225,7 +225,7 @@ export const skills: Skill[] = [
     {
         type: "devops-hosting",
         name: "GitHub Actions",
-        icon: "skill-icons:github-dark",
+        icon: "simple-icons:githubactions",
         color: "neutral",
     },
     {
