@@ -16,6 +16,7 @@
                     {{ contact.label }}
                 </h3>
                 <p
+                    v-if="contact.value"
                     class="text-sm text-gray-600 dark:text-gray-400 break-all px-2"
                 >
                     {{ contact.value }}
@@ -36,7 +37,7 @@
 <script setup lang="ts">
 type Contact = {
     label: string;
-    value: string;
+    value?: string;
     icon: string;
     link: string;
     bgClass: string;
