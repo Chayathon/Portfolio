@@ -20,9 +20,10 @@
         >
             <AppContactCard :contact="contact" />
         </Motion>
+        <AppContactCard :contact="resume" class="sm:col-span-2" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { contacts } from "~/data/contacts";
+import { contacts, resume } from "~/data/contacts";
 </script>
