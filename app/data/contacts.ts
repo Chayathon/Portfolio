@@ -2,7 +2,7 @@ import { CONTACT_LINKS } from "../utils/links";
 
 export type Contact = {
     label: string;
-    value: string;
+    value?: string;
     icon: string;
     link: string;
     bgClass: string;
@@ -47,3 +47,12 @@ export const contacts: Contact[] = [
         action: "callNow",
     },
 ];
+
+export const resume: Contact = {
+    label: "Resume",
+    icon: "i-lucide-file-user",
+    link: CONTACT_LINKS.resume,
+    bgClass:
+        "bg-gradient-to-br from-purple-500 to-purple-600 group-hover:from-purple-600 group-hover:to-purple-700",
+    action: "download",
+};
