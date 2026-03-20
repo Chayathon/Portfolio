@@ -55,7 +55,8 @@
         "description": "Feel free to reach out to me if you have any questions or opportunities!",
         "sendEmail": "Send Email",
         "visitProfile": "Visit Profile",
-        "callNow": "Call Now"
+        "callNow": "Call Now",
+        "download": "Download"
     },
     "error": {
         "title": "Page not found",
