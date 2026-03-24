@@ -19,7 +19,7 @@
 
         <div class="space-y-4 flex-1 flex flex-col">
             <h3
-                class="text-xl font-bold line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200"
+                class="text-xl font-bold line-clamp-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200"
             >
                 {{ title }}
             </h3>

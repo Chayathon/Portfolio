@@ -24,7 +24,7 @@
                     >
                         <img
                             :src="item"
-                            class="rounded-2xl border border-neutral-200 dark:border-neutral-700"
+                            class="h-96 mx-auto rounded-2xl border border-neutral-200 dark:border-neutral-700"
                             loading="lazy"
                         />
                     </UCarousel>
@@ -35,15 +35,13 @@
                         <div
                             v-for="(item, index) in images"
                             :key="index"
-                            class="w-32 opacity-50 hover:opacity-100 transition-opacity"
+                            class="opacity-50 hover:opacity-100 transition-opacity"
                             :class="{ 'opacity-100': activeIndex === index }"
                             @click="select(index)"
                         >
                             <img
                                 :src="item"
-                                width="80"
-                                height="80"
-                                class="rounded-lg border border-neutral-400 dark:border-neutral-700"
+                                class="max-h-12 rounded-lg border border-neutral-400 dark:border-neutral-700"
                                 loading="lazy"
                             />
                         </div>
