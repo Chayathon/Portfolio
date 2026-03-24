@@ -46,14 +46,14 @@ useSeoMeta({
     ogType: "website",
     ogUrl: "https://portfolio.chayathon.workers.dev/",
     ogSiteName: "Chayathon's Portfolio",
-    ogImage: "/og-image.webp",
+    ogImage: "https://portfolio.chayathon.workers.dev/og-image.webp",
     ogImageWidth: 1200,
     ogImageHeight: 630,
     ogLocale: lang,
     twitterCard: "summary_large_image",
     twitterTitle: "Chayathon's Portfolio",
     twitterDescription: "Chayathon's portfolio website!",
-    twitterImage: "/og-image.webp",
+    twitterImage: "https://portfolio.chayathon.workers.dev/og-image.webp",
     robots: "index, follow",
 });
 </script>
