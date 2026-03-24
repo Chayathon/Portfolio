@@ -44,7 +44,7 @@ useSeoMeta({
     ogTitle: "Chayathon's Portfolio",
     ogDescription: "Chayathon's portfolio website!",
     ogType: "website",
-    ogUrl: "https://portfolio.chayathon.workers.dev",
+    ogUrl: "https://portfolio.chayathon.workers.dev/",
     ogSiteName: "Chayathon's Portfolio",
     ogImage: "/og-image.webp",
     ogImageWidth: 1200,
