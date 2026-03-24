@@ -14,13 +14,8 @@
 <script setup lang="ts">
 import * as locales from "@nuxt/ui/locale";
 
-const route = useRoute();
-const config = useRuntimeConfig();
 const { locale } = useI18n();
 const colorMode = useColorMode();
-const siteUrl = config.public.siteUrl;
-const url = computed(() => `${siteUrl}${route.path}`);
-const image = `${siteUrl}/og-image.webp`;
 
 const color = computed(() =>
     colorMode.value === "dark" ? "#020618" : "white",
@@ -34,10 +29,7 @@ useHead({
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { key: "theme-color", name: "theme-color", content: color },
     ],
-    link: [
-        { rel: "icon", href: "/favicon.ico" },
-        { rel: "canonical", href: url },
-    ],
+    link: [{ rel: "icon", href: "/favicon.ico" }],
     htmlAttrs: {
         lang,
     },
@@ -52,16 +44,16 @@ useSeoMeta({
     ogTitle: "Chayathon's Portfolio",
     ogDescription: "Chayathon's portfolio website!",
     ogType: "website",
-    ogUrl: url,
+    ogUrl: "https://portfolio.chayathon.workers.dev",
     ogSiteName: "Chayathon's Portfolio",
-    ogImage: image,
+    ogImage: "/og-image.webp",
     ogImageWidth: 1200,
     ogImageHeight: 630,
     ogLocale: lang,
     twitterCard: "summary_large_image",
     twitterTitle: "Chayathon's Portfolio",
     twitterDescription: "Chayathon's portfolio website!",
-    twitterImage: image,
+    twitterImage: "/og-image.webp",
     robots: "index, follow",
 });
 </script>
