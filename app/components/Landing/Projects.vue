@@ -62,12 +62,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch, nextTick } from "vue";
 import { projects as projectsData, type Project } from "~/data/projects";
 
+const route = useRoute();
 const { locale, t } = useI18n();
-
-const VISIBLE_PROJECTS = 6;
 
 type ResolvedProject = Omit<Project, "description" | "features"> & {
     description: string;
@@ -78,9 +77,101 @@ const open = ref(false);
 const showAll = ref(false);
 const selectedProject = ref<ResolvedProject | null>(null);
 
+const HASH_BASE = "projects";
+const VISIBLE_PROJECTS = 6;
+
+const getTitleFromHash = (hash: string): string | null => {
+    if (!hash) {
+        return null;
+    }
+
+    const normalizedHash = hash.startsWith("#") ? hash.slice(1) : hash;
+    const [section, query = ""] = normalizedHash.split("?");
+
+    if (section !== HASH_BASE) {
+        return null;
+    }
+
+    const params = new URLSearchParams(query);
+
+    return params.get("title");
+};
+
+const getProjectHash = (title?: string): string => {
+    if (!title) {
+        return "";
+    }
+
+    return `#${HASH_BASE}?title=${encodeURIComponent(title)}`;
+};
+
+const replaceHash = (title?: string) => {
+    if (!import.meta.client) {
+        return;
+    }
+
+    const hash = getProjectHash(title);
+    const currentHash = window.location.hash || "";
+
+    if (currentHash === hash) {
+        return;
+    }
+
+    const nextUrl = `${window.location.pathname}${window.location.search}${hash}`;
+    window.history.replaceState(window.history.state, "", nextUrl);
+};
+
+const scrollToProjectsSection = async () => {
+    if (!import.meta.client) {
+        return;
+    }
+
+    await nextTick();
+
+    const section = window.document.getElementById(HASH_BASE);
+
+    section?.scrollIntoView({ behavior: "smooth", block: "start" });
+};
+
+const syncProjectFromHash = (hash: string) => {
+    const title = getTitleFromHash(hash);
+
+    if (!title) {
+        return;
+    }
+
+    const project = projects.value.find((item) => item.title === title);
+
+    if (!project) {
+        return;
+    }
+
+    selectedProject.value = project;
+    open.value = true;
+
+    const projectIndex = projects.value.findIndex(
+        (item) => item.title === title,
+    );
+
+    if (projectIndex >= VISIBLE_PROJECTS) {
+        showAll.value = true;
+    }
+
+    void scrollToProjectsSection();
+};
+
 const handleOpen = (project: ResolvedProject) => {
     selectedProject.value = project;
     open.value = true;
+    replaceHash(project.title);
+};
+
+const handleClose = () => {
+    replaceHash();
+
+    setTimeout(() => {
+        selectedProject.value = null;
+    }, 300);
 };
 
 const toggleViewAll = () => {
@@ -103,4 +194,20 @@ const hasMoreProjects = computed(
 const displayedProjects = computed(() =>
     showAll.value ? projects.value : projects.value.slice(0, VISIBLE_PROJECTS),
 );
+
+watch(
+    () => route.hash,
+    (hash) => {
+        syncProjectFromHash(hash);
+    },
+    { immediate: true },
+);
+
+watch(open, (isOpen) => {
+    if (isOpen) {
+        return;
+    }
+
+    handleClose();
+});
 </script>
