@@ -37,7 +37,8 @@
         "showLess": "Show less",
         "viewDetails": "View Details",
         "viewProject": "View Project",
-        "viewGithub": "View on GitHub"
+        "viewGithub": "View on GitHub",
+        "share": "Share"
     },
     "workexperience": {
         "title": "Work Experience",

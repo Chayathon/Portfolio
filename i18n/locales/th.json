@@ -37,7 +37,8 @@
         "showLess": "แสดงน้อยลง",
         "viewDetails": "ดูรายละเอียด",
         "viewProject": "เยี่ยมชมโปรเจกต์",
-        "viewGithub": "ดูบน GitHub"
+        "viewGithub": "ดูบน GitHub",
+        "share": "แชร์"
     },
     "workexperience": {
         "title": "ประสบการณ์การทำงาน",
