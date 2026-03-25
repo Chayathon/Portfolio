@@ -5,7 +5,7 @@
         :ui="{
             content:
                 'sm:mx-auto sm:w-full sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl rounded-2xl',
-            footer: 'gap-4',
+            footer: 'flex justify-between',
         }"
     >
         <template #body>
@@ -24,7 +24,7 @@
                     >
                         <img
                             :src="item"
-                            class="h-96 mx-auto rounded-2xl border border-neutral-200 dark:border-neutral-700"
+                            class="max-h-48 lg:max-h-64 xl:max-h-96 mx-auto rounded-2xl border border-neutral-200 dark:border-neutral-700"
                             loading="lazy"
                         />
                     </UCarousel>
@@ -84,32 +84,47 @@
             </div>
         </template>
 
-        <template #footer v-if="url || github">
-            <UButton
-                v-if="url"
-                size="lg"
-                icon="i-lucide-globe"
-                :href="url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover:scale-105 transition duration-200"
-                :disabled="status !== 'online'"
-            >
-                {{ t("projects.viewProject") }}
-            </UButton>
+        <template #footer>
+            <div v-if="url || github" class="space-x-4">
+                <UButton
+                    v-if="url"
+                    size="lg"
+                    icon="i-lucide-globe"
+                    :href="url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:scale-105 transition duration-200"
+                    :disabled="status !== 'online'"
+                >
+                    {{ t("projects.viewProject") }}
+                </UButton>
 
-            <UButton
-                v-if="github"
-                color="neutral"
-                size="lg"
-                icon="i-simple-icons-github"
-                :href="github"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover:scale-105 transition duration-200"
-            >
-                {{ t("projects.viewGithub") }}
-            </UButton>
+                <UButton
+                    v-if="github"
+                    color="neutral"
+                    size="lg"
+                    icon="i-simple-icons-github"
+                    :href="github"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:scale-105 transition duration-200"
+                >
+                    {{ t("projects.viewGithub") }}
+                </UButton>
+            </div>
+
+            <div class="justify-end">
+                <UButton
+                    size="lg"
+                    color="neutral"
+                    variant="soft"
+                    icon="i-lucide-share-2"
+                    class="hover:scale-105 transition duration-200"
+                    @click="shareProject(title)"
+                >
+                    {{ t("projects.share") }}
+                </UButton>
+            </div>
         </template>
     </UModal>
 </template>
@@ -138,19 +153,41 @@ const { t } = useI18n();
 const carousel = useTemplateRef("carousel");
 const activeIndex = ref(0);
 
-function onClickPrev() {
+const onClickPrev = () => {
     activeIndex.value--;
-}
-function onClickNext() {
+};
+const onClickNext = () => {
     activeIndex.value++;
-}
-function onSelect(index: number) {
+};
+const onSelect = (index: number) => {
     activeIndex.value = index;
-}
+};
 
-function select(index: number) {
+const select = (index: number) => {
     activeIndex.value = index;
 
     carousel.value?.emblaApi?.scrollTo(index);
-}
+};
+
+const copyToClipboard = async (text: string) => {
+    await navigator.clipboard.writeText(text);
+};
+
+const shareProject = async (shareTitle?: string) => {
+    const shareUrl = window.location.href;
+
+    if (navigator.share) {
+        try {
+            await navigator.share({
+                title: shareTitle,
+                url: shareUrl,
+            });
+            return;
+        } catch {
+            // Fall back to clipboard when the native share dialog is dismissed or unavailable.
+        }
+    }
+
+    await copyToClipboard(shareUrl);
+};
 </script>
