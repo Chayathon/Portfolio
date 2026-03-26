@@ -1,60 +1,68 @@
-# Nuxt Starter Template
+# Chayathon Portfolio
 
-[![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
+Portfolio website for Chayathon, built with Nuxt 4 and Vue 3 + TypeScript.
 
-Use this template to get started with [Nuxt UI](https://ui.nuxt.com) quickly.
+## English
 
-- [Live demo](https://starter-template.nuxt.dev/)
-- [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
+## Tech Stack
 
-<a href="https://starter-template.nuxt.dev/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-    <img alt="Nuxt Starter Template" src="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png" width="830" height="466">
-  </picture>
-</a>
+- Nuxt 4
+- Vue 3 + TypeScript
+- Nuxt UI
+- Tailwind CSS 4
+- @nuxtjs/i18n (English/Thai)
+- motion-v (animation)
+- three.js (3D/interactive background)
+- ESLint
 
-> The starter template for Vue is on https://github.com/nuxt-ui-templates/starter-vue.
+## Features
 
-## Quick Start
+- Single-page portfolio layout
+- Bilingual support: English and Thai
+- Light/Dark theme toggle
+- Structured sections:
+    - About Me
+    - Skills
+    - Projects
+    - Work Experience
+    - Education
+    - Contacts
+- Shareable project showcase so others can easily view selected work
+- Data layer separated from UI components for easier content updates
 
-```bash [Terminal]
-npm create nuxt@latest -- -t github:nuxt-ui-templates/starter
+## Project Structure
+
+```text
+app/
+  components/
+    App/           # reusable UI cards, header, footer, modal, toggles
+    Landing/       # page sections for the landing page
+  data/            # portfolio content (about, skills, projects, etc.)
+  assets/css/      # global styles
+  pages/           # routes
+  layouts/         # app layouts
+i18n/locales/      # translation files (en.json, th.json)
 ```
 
-## Deploy your own
+---
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-name=starter&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-ui-templates%2Fstarter&demo-image=https%3A%2F%2Fui.nuxt.com%2Fassets%2Ftemplates%2Fnuxt%2Fstarter-dark.png&demo-url=https%3A%2F%2Fstarter-template.nuxt.dev%2F&demo-title=Nuxt%20Starter%20Template&demo-description=A%20minimal%20template%20to%20get%20started%20with%20Nuxt%20UI.)
+เว็บไซต์ Portfolio ส่วนตัวของ Chayathon รองรับสองภาษา พัฒนาด้วย Nuxt 4 และ Vue 3 + TypeScript
 
-## Setup
+## ฟีเจอร์
 
-Make sure to install the dependencies:
+- โครงสร้างหน้าแบบ single-page portfolio
+- รองรับ 2 ภาษา: English และ Thai
+- สลับธีม Light/Dark
+- แสดงข้อมูลเป็นหมวดชัดเจน:
+    - About Me
+    - Skills
+    - Projects
+    - Work Experience
+    - Education
+    - Contacts
+- แชร์โปรเจกต์ให้คนอื่นเข้าชมได้ง่าย
+- แยก data layer ออกจาก component เพื่อแก้ไขเนื้อหาได้ง่าย
 
-```bash
-pnpm install
-```
+## License
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-pnpm dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-pnpm build
-```
-
-Locally preview production build:
-
-```bash
-pnpm preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+This project is for personal portfolio use.
