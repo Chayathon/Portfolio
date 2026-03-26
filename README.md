@@ -2,8 +2,6 @@
 
 Portfolio website for Chayathon, built with Nuxt 4 and Vue 3 + TypeScript.
 
-## English
-
 ## Tech Stack
 
 - Nuxt 4
@@ -46,7 +44,7 @@ i18n/locales/      # translation files (en.json, th.json)
 
 ---
 
-เว็บไซต์ Portfolio ส่วนตัวของ Chayathon รองรับสองภาษา พัฒนาด้วย Nuxt 4 และ Vue 3 + TypeScript
+เว็บไซต์ Portfolio ส่วนตัวของ ชยธร รองรับสองภาษา พัฒนาด้วย Nuxt 4 และ Vue 3 + TypeScript
 
 ## ฟีเจอร์
 
