@@ -134,6 +134,12 @@ export const skills: Skill[] = [
     },
     {
         type: "library-frameworks",
+        name: "React Native",
+        icon: "logos:react",
+        color: "primary",
+    },
+    {
+        type: "library-frameworks",
         name: "Flutter",
         icon: "logos:flutter",
         color: "primary",
