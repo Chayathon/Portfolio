@@ -85,7 +85,7 @@
         </template>
 
         <template #footer>
-            <div v-if="url || github" class="space-x-4">
+            <div v-if="url || github" class="space-x-2 sm:space-x-4">
                 <UButton
                     v-if="url"
                     size="lg"
@@ -109,11 +109,11 @@
                     rel="noopener noreferrer"
                     class="hover:scale-105 transition duration-200"
                 >
-                    {{ t("projects.viewGithub") }}
+                    <span v-if="!url">{{ t("projects.viewGithub") }}</span>
                 </UButton>
             </div>
 
-            <div class="justify-end">
+            <div>
                 <UButton
                     size="lg"
                     color="neutral"
@@ -122,7 +122,9 @@
                     class="hover:scale-105 transition duration-200"
                     @click="shareProject(title)"
                 >
-                    {{ t("projects.share") }}
+                    <span v-if="!url || !github">{{
+                        t("projects.share")
+                    }}</span>
                 </UButton>
             </div>
         </template>
