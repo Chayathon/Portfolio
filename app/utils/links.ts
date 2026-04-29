@@ -5,7 +5,7 @@ export const CONTACT_LINKS = {
     linkedin: "https://www.linkedin.com/in/chayathon-termpipatphong/",
     github: "https://github.com/Chayathon",
     phone: "tel:0957079861",
-    resume: "https://1drv.ms/b/c/af11a9a596620dd4/IQBKRTmwnOywTZJ6cnY_DQLYAcGq9CdvlBjVg4XAV-p5kZM?e=eKJ4df",
+    resume: "https://1drv.ms/f/c/af11a9a596620dd4/IgDoma-1yjG-Sr7y3rm0PZGcAbCYblDqyT4dIZ_Ydsu7L8s?e=OBZ3WQ",
 } as const;
 
 export const FOOTER_LINKS = [
